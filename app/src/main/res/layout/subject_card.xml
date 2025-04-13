@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.circularreveal.CircularRevealRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/subject_card_view"
+        android:elevation="20dp"
+        android:layout_marginVertical="2dp"
+        >
+        <TextView
+            android:id="@+id/subject_name"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:text="subject"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="25dp"
+
+
+            />
+    </androidx.cardview.widget.CardView>
+</com.google.android.material.circularreveal.CircularRevealRelativeLayout>

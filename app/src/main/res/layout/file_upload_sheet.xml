@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/upload_note_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Note Name"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="16dp"
+        />
+    <Button
+        android:id="@+id/upload_note_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add Notes"
+
+        android:layout_marginHorizontal="16dp"
+        />
+
+</LinearLayout>
