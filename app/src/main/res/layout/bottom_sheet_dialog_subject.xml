@@ -9,6 +9,7 @@
         android:id="@+id/subject_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="40dp"
         android:hint="Enter subject name"
         android:inputType="textPersonName" />
 

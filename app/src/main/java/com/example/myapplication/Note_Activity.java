@@ -1,7 +1,11 @@
 package com.example.myapplication;
 
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 import static java.security.AccessController.getContext;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,9 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class Note_Activity extends AppCompatActivity {
@@ -29,7 +35,7 @@ public class Note_Activity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
     AppDatabase db;
     NoteAdapter noteAdapter; // Make adapter a class member
-
+LottieAnimationView notes_lottie;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,20 +43,20 @@ public class Note_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_note);
 
         int subjectId = getIntent().getIntExtra("subject_id", -1);
-
-        db = Room.databaseBuilder(this, AppDatabase.class, "notes-latest")
+        notes_lottie=findViewById(R.id.notes_lottie);
+        db = Room.databaseBuilder(this, AppDatabase.class, "latest-db")
                 .allowMainThreadQueries()
                 .fallbackToDestructiveMigrationFrom(1)
                 .build();
 
         notesForSubject = db.noteDao().getNotesForSubject(subjectId);
-
+        check_note_lottie();
         floatingActionButton = findViewById(R.id.floatingButton_2);
         recyclerView = findViewById(R.id.notes_recycler);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize adapter as class member
-        noteAdapter = new NoteAdapter(this, notesForSubject);
+        noteAdapter = new NoteAdapter(this, notesForSubject,db);
         recyclerView.setAdapter(noteAdapter);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +82,7 @@ public class Note_Activity extends AppCompatActivity {
                             List<note> updatedList = db.noteDao().getNotesForSubject(subjectId);
                             notesForSubject.clear();
                             notesForSubject.addAll(updatedList);
+                            check_note_lottie();
 
                             // Notify adapter of data change
                             noteAdapter.notifyDataSetChanged();
@@ -88,6 +95,7 @@ public class Note_Activity extends AppCompatActivity {
             }
         });
 
+
         // Window insets listener at the end
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -95,4 +103,18 @@ public class Note_Activity extends AppCompatActivity {
             return insets;
         });
     }
+    public void check_note_lottie()
+    {
+        if(notesForSubject.isEmpty())
+        {
+            notes_lottie.setVisibility(VISIBLE);
+            notes_lottie.playAnimation();
+        }
+        else
+        {
+            notes_lottie.setVisibility(GONE);
+            notes_lottie.pauseAnimation();
+        }
+    }
+
 }

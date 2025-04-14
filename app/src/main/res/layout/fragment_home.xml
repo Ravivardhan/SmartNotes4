@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -5,23 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/subject_recycler_view"
+    <!-- Scrollable container for all content -->
+    <androidx.core.widget.NestedScrollView
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/subject_card"
-        android:layout_marginVertical="70dp" />
+        android:layout_above="@id/floatingButton"
+        android:fillViewport="true">
 
-<com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:layout_width="wrap_content"
-    app:fabCustomSize="70dp"
-    android:id="@+id/floatingButton"
-    android:layout_height="wrap_content"
-    android:layout_alignParentBottom="true"
-    android:layout_alignParentRight="true"
-    android:layout_marginBottom="100dp"
-    android:layout_marginRight="16dp"
-    android:contentDescription="Add"
-    android:src="@android:drawable/ic_input_add"
-    />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- RecyclerView (now non-scrollable) -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/subject_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:nestedScrollingEnabled="false"
+                />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/subject_lottie"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                app:lottie_rawRes="@raw/empty"
+                app:lottie_loop="true"
+
+                app:lottie_autoPlay="true"
+                />
+            <!-- Text at bottom of content (scrolls with RecyclerView) -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginBottom="32dp"
+                android:gravity="center"
+                android:text="Made by Ravivardhan\nPowered by (ChatGPT &amp; DeepSeek) \u2764\uFE0F"
+                android:textColor="#B3B3B3"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!-- Floating Action Button (fixed position) -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="100dp"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="Add"
+        android:src="@android:drawable/ic_input_add"
+        app:fabCustomSize="70dp" />
+
 </RelativeLayout>

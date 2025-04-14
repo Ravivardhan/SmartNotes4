@@ -35,7 +35,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -45,8 +44,9 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.navigation.fragment)
-
+    implementation ("com.airbnb.android:lottie:3.4.0")
     implementation("com.google.android.material:material:1.11.0")
+
 
     implementation(libs.navigation.ui)
     testImplementation(libs.junit)

@@ -1,26 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:padding="4dp">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:elevation="20dp"
         android:id="@+id/notes_card_view"
-        android:layout_marginVertical="2dp"
-        >
-        <TextView
-            android:id="@+id/notes_name"
-            android:gravity="center_vertical"
-            android:layout_gravity="center_vertical"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="Notes"
-            android:textStyle="italic"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        android:layout_marginVertical="4dp">
 
-            />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp">
+
+            <!-- Icon on the left -->
+            <ImageView
+                android:id="@+id/notes_icon"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:src="@drawable/notes_icon"
+                android:layout_centerVertical="true"
+                android:contentDescription="Notes icon"/>
+
+            <!-- Text on the right -->
+            <TextView
+                android:id="@+id/notes_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/notes_icon"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:text="Notes"
+                android:textSize="18sp"
+                android:textStyle="bold"/>
+
+        </RelativeLayout>
+
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

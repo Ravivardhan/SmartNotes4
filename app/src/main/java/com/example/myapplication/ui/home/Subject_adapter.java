@@ -20,9 +20,11 @@ import com.example.myapplication.Subject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Subject_adapter extends RecyclerView.Adapter<Subject_view_holder> {
     Context context;
+    int[] color_codes={0xFFFF9E2C,0xFF42A5F5,0xFFFF5252,0xFF66BB6A,0xFFFF4081,0xFFFFD600};
 
     AppDatabase db;
     List<Subject> subject_list;
@@ -44,6 +46,8 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_view_holder> {
 
 
         holder.subject_name.setText(subject_list.get(position).getSubject_name());
+        int c_code=(int)(Math.random()*6);
+        holder.folder_image.setColorFilter(color_codes[c_code]);
         //on single click
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +82,9 @@ public class Subject_adapter extends RecyclerView.Adapter<Subject_view_holder> {
     public void updateList(List<Subject> newList) {
         this.subject_list = newList;
         notifyDataSetChanged();
+
     }
+
 
     @Override
     public int getItemCount() {

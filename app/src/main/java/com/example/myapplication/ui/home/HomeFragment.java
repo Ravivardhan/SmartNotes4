@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.myapplication.AppDatabase;
 import com.example.myapplication.R;
 import com.example.myapplication.Subject;
@@ -21,6 +22,7 @@ import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
@@ -37,6 +39,7 @@ public class HomeFragment extends Fragment {
     FloatingActionButton floatingActionButton;
     private FragmentHomeBinding binding;
     RecyclerView subject_recycler;
+    LottieAnimationView animationView;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -49,11 +52,13 @@ public class HomeFragment extends Fragment {
 
         //implementation starts from here
 
-        db=Room.databaseBuilder(getContext(),AppDatabase.class,"notes-latest").allowMainThreadQueries().fallbackToDestructiveMigrationFrom(1).build();
+        db=Room.databaseBuilder(getContext(),AppDatabase.class,"latest-db").allowMainThreadQueries().fallbackToDestructiveMigrationFrom().build();
 
-
+        animationView=binding.subjectLottie;
 
         list=db.subjectDao().getAllSubjects();
+
+        check_visibility_lottie();
         subjects="";
         for (Subject s:list)
         {
@@ -62,7 +67,9 @@ public class HomeFragment extends Fragment {
         }
 
         subject_recycler=binding.subjectRecyclerView;
-        subject_recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        subject_recycler.setLayoutManager(new GridLayoutManager(getContext(), 2));
+
+
         Subject_adapter subjectAdapter=new Subject_adapter(getContext(),list,db);
         subject_recycler.setAdapter(subjectAdapter);
 
@@ -83,12 +90,13 @@ public class HomeFragment extends Fragment {
                     @Override
                     public void onClick(View v) {
                         String s_name=subjectInput.getText().toString();
-                        if((s_name!=null || s_name!="") && s_name.matches("(?i)[a-z0-9]{2,}"))
+                        if((s_name!=null || s_name!="") && s_name.matches("(?i)[a-z0-9 ]{2,}"))
                         {
-                            db.subjectDao().insert(new Subject(s_name));
+                            db.subjectDao().insert(new Subject(s_name.strip()));
                             list=db.subjectDao().getAllSubjects();
                             subjectAdapter.updateList(list);
                             dialog.dismiss();
+                            check_visibility_lottie();
                         }
                         else
                         {
@@ -113,13 +121,6 @@ public class HomeFragment extends Fragment {
 
 
 
-
-
-
-
-
-
-
         return root;
     }
 
@@ -127,5 +128,17 @@ public class HomeFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+    public void check_visibility_lottie()
+    {
+        if(list.isEmpty())
+        {
+            animationView.setVisibility(View.VISIBLE);
+            animationView.playAnimation();
+        }
+        else {
+            animationView.setVisibility(View.GONE);
+            animationView.pauseAnimation();
+        }
     }
 }
